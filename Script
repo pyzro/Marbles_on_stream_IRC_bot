@@ -1,0 +1,28 @@
+
+on *:text:*!play*:#:{
+  if ( %test. [ $+ [ $chan ] ] != 0 ) {
+    /inc %counter. [ $+ [ $chan ] ]
+    if ( %counter. [ $+ [ $chan ] ] == 1 ) { .timer. [ $+ [ $chan ] ] 1 30 set %countdown. [ $+ [ $chan ] ] 1 }
+  
+  if ( %counter. [ $+ [ $chan ] ] >= 10 && %countdown. [ $+ [ $chan ] ] == 0 ) {
+    set %counter. [ $+ [ $chan ] ] 0
+    set %countdown. [ $+ [ $chan ] ] 0
+    set %test. [ $+ [ $chan ] ] 0
+    msg $chan !play
+    .timer. [ $+ [ $chan ] ] off
+    timer.cooldown. [ $+ [ $chan ] ] 1 120 set %test. [ $+ [ $chan ] ] 1
+    }
+  
+  elseif ( %counter. [ $+ [ $chan ] ] < 10 && %countdown. [ $+ [ $chan ] ] == 1 ) { 
+    set %counter. [ $+ [ $chan ] ] 0 
+    set %countdown. [ $+ [ $chan ] ] 0 
+    .timer. [ $+ [ $chan ] ] off 
+    }
+
+  elseif ( %counter. [ $+ [ $chan ] ] >= 10 && %countdown. [ $+ [ $chan ] ] == 1 ) {
+    set %counter. [ $+ [ $chan ] ] 0 
+    set %countdown. [ $+ [ $chan ] ] 0 
+    .timer. [ $+ [ $chan ] ] off
+    }
+}
+}
